@@ -1,16 +1,24 @@
 define repo::config (
-
+  $basepath = '',
+  $owner = '',
+  $group = '',
 ){
   $paths = $::operatingsystem ? {
     /(?i-mx:centos|fedora|redhat|scientific)/ => [
-      '/etc/httpd',
-      '/etc/httpd/conf',
-      '/var/log/httpd'
+      $basepath,
+      "${basepath}/i386",
+      "${basepath}/i686",
+      "${basepath}/noarch",
+      "${basepath}/SRPMS",
+      "${basepath}/x86_64"
     ],
   }
 
-MyRepo/i386
-MyRepo/noarch
-MyRepo/i686
-MyRepo/SRPMS
+  file { $paths:
+    ensure => directory,
+    owner  => $owner,
+    group  => $group,
+    mode   => '0755',
+  }
+
 }
