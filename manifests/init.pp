@@ -1,8 +1,10 @@
-class repo {
+class repo (
+  $ensure = 'latest'
+){
   $required = $::operatingsystem ? {
     /(?i-mx:centos|fedora|redhat|scientific)/ => 'createrepo',
   }
 
-  package { $required: ensure => latest }
+  package { $required: ensure => $ensure }
 
 }
